@@ -1,15 +1,27 @@
 function rpn
-% rpn calculator
-fprintf(['RPN calculator. Type h or help to see available functions.'...
+% simple rpn (Reverse Polish notation) calculator
+% 
+% WTJ
+% 20180113
+
+fprintf(['Reverse Polish notation calculator. Type h or help to see available functions.'...
         '\n\tWentao Jiang, 20180113\n']);
 stack = NaN(10000);
 ind = 1;
 singlefuns = {'exp','log','ln','sqrt','sq',...
-    'sin','cos','tan','cot','sec','csc','asin','acos','atan','acot'};
+    'sin','cos','tan','cot','sec','csc','asin','acos','atan','acot',...
+    'ischar','isnumeric','isnan','isinf'};
 doublefuns = {'+','-','*','/','^'};
-consts = {'pi'};
 syscmd = {'exit','h','help','d','c'};
+% scientific constants
+hbar = 1.0545718e-34;
+c_const = 299792458;
+epsilon0 = 8.854187817e-12;
+mu0 = 1.2566370614e-6;
+
+%
 while true
+    dispstk(stack, ind);
     s = input('rpn:>>','s');
     try
         s2d = eval(s);
@@ -25,13 +37,13 @@ while true
             case 'exit'
                 return;
             case 'h'
-                fprintf('Commands:\n\th: help\thelp: help\n\td: delete last number.\n\tc: clear stack.\n')
+                fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n')
                 fprintf('Type exit to exit.\nSingle input functions:\n');
                 disp(singlefuns);
                 disp('Double input functions:');
                 disp(doublefuns);
             case 'help'
-                fprintf('Commands:\n\th: help\thelp: help\n\td: delete last number.\n\tc: clear stack.\n')
+                fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n')
                 fprintf('Type exit to exit.\nSingle input functions:\n');
                 disp(singlefuns);
                 disp('Double input functions:');
@@ -51,7 +63,13 @@ while true
             continue;
         end
         val = stack(ind-1);
-        val = eval(sprintf('%s(%.8e)',s,val) );
+        if strcmpi(s,'sq')
+            val = eval(sprintf('%.8e^2',val) );
+        elseif strcmpi(s,'ln')
+            val = eval(sprintf('log(%.8e)',val) );
+        else
+            val = eval(sprintf('%s(%.8e)',s,val) );
+        end
         stack(ind-1) = val;
     elseif checkcmd(s, doublefuns)
         if ind - 1 < 2
@@ -66,7 +84,6 @@ while true
     else
         disp('Command not found!');
     end
-    dispstk(stack, ind);
 end
 end
 
