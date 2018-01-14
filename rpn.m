@@ -10,8 +10,11 @@ stack = NaN(10000);
 ind = 1;
 singlefuns = {'exp','log','ln','sqrt','sq',...
     'sin','cos','tan','cot','sec','csc','asin','acos','atan','acot',...
-    'ischar','isnumeric','isnan','isinf'};
+    'sinh','cosh','tanh','coth','asinh','acosh','atanh','acoth',...
+    'ischar','isnumeric','isnan','isinf',...
+    'omega2lambda0','lambda02omega','freq2lambda0','lambda02freq'};
 doublefuns = {'+','-','*','/','^'};
+doublefunsmanual = {'omega2lambda','lambda2omega','freq2lambda','lambda2freq'};
 syscmd = {'exit','h','help','d','c','clc'};
 % scientific constants
 hbar = 1.0545718e-34;
@@ -84,6 +87,16 @@ while true
         val1 = stack(ind-1);
         val1 = eval(sprintf('%.8e%s%.8e',val1,s,val2) );
         stack(ind-1) = val1;
+    elseif checkcmd(s, doublefunsmanual)
+        if ind - 1 < 2
+            warning('Not enough input!');
+            continue;
+        end
+        ind = ind - 1;
+        val2 = stack(ind);
+        val1 = stack(ind-1);
+        val1 = eval(sprintf('%s(%.8e,%.8e)',s,val1,val2) );
+        stack(ind-1) = val1;
     else
         disp('Command not found!');
     end
@@ -101,4 +114,44 @@ function res = checkcmd(str, cmdset)
 % check command, true if command str found in cmdset
 res = cellfun(@(s)strcmpi(s,str),cmdset,'UniformOutput',false);
 res = max([res{:}]);
+end
+
+%% manual functions
+function l0 = omega2lambda0(omega)
+% calculate vacuum wavelength from frequency
+c_const = 299792458;
+l0 = 2*pi*c_const/omega;
+end
+
+function l = omega2lambda(omega, n)
+% calculate wavelength from frequency and refractive index
+c_const = 299792458;
+l = 2*pi*c_const/omega/n;
+end
+
+function w = lambda02omega(l0)
+c_const = 299792458;
+w = 2*pi*c_const/l0;
+end
+
+function w = lambda2omega(l, n)
+% calculate wavelength from frequency and refractive index
+c_const = 299792458;
+w = 2*pi*c_const/l/n;
+end
+
+function l0 = freq2lambda0(f)
+l0 = omega2lambda0(2*pi*f);
+end
+
+function l0 = freq2lambda(f,n)
+l0 = omega2lambda(2*pi*f,n);
+end
+
+function f = lambda02freq(l0)
+f = lambda02omega(l0)/2/pi;
+end
+
+function f = lambda2freq(l0,n)
+f = lambda2omega(l0,n)/2/pi;
 end
