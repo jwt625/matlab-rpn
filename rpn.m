@@ -12,7 +12,7 @@ singlefuns = {'exp','log','ln','sqrt','sq',...
     'sin','cos','tan','cot','sec','csc','asin','acos','atan','acot',...
     'ischar','isnumeric','isnan','isinf'};
 doublefuns = {'+','-','*','/','^'};
-syscmd = {'exit','h','help','d','c'};
+syscmd = {'exit','h','help','d','c','clc'};
 % scientific constants
 hbar = 1.0545718e-34;
 c_const = 299792458;
@@ -37,13 +37,13 @@ while true
             case 'exit'
                 return;
             case 'h'
-                fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n')
+                fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n\tclc: clear command window.\n')
                 fprintf('Type exit to exit.\nSingle input functions:\n');
                 disp(singlefuns);
                 disp('Double input functions:');
                 disp(doublefuns);
             case 'help'
-                fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n')
+                fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n\tclc: clear command window.\n')
                 fprintf('Type exit to exit.\nSingle input functions:\n');
                 disp(singlefuns);
                 disp('Double input functions:');
@@ -56,6 +56,9 @@ while true
                 else
                     warning('Stack already empty.');
                 end
+            case 'clc'
+                clc;
+                continue;
         end
     elseif checkcmd(s, singlefuns)
         if ind - 1 < 1
