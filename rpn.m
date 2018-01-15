@@ -4,7 +4,7 @@ function rpn
 % WTJ
 % 20180113
 
-fprintf(['Reverse Polish notation calculator. Type h or help to see available functions.'...
+fprintf(['Reverse Polish notation calculator.\nType h or help to see available functions.'...
         '\n\tWentao Jiang, 20180113\n']);
 stack = NaN(10000);
 ind = 1;
@@ -12,7 +12,8 @@ singlefuns = {'exp','log','ln','sqrt','sq',...
     'sin','cos','tan','cot','sec','csc','asin','acos','atan','acot',...
     'sinh','cosh','tanh','coth','asinh','acosh','atanh','acoth',...
     'ischar','isnumeric','isnan','isinf',...
-    'omega2lambda0','lambda02omega','freq2lambda0','lambda02freq'};
+    'omega2lambda0','lambda02omega','freq2lambda0','lambda02freq',...
+    'deg2rad','rad2deg'};
 doublefuns = {'+','-','*','/','^'};
 doublefunsmanual = {'omega2lambda','lambda2omega','freq2lambda','lambda2freq'};
 syscmd = {'exit','h','help','d','c','clc'};
@@ -45,12 +46,14 @@ while true
                 dispcell(singlefuns);
                 disp('Double input functions:');
                 dispcell(doublefuns);
+                dispcell(doublefunsmanual);
             case 'help'
                 fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n\tclc: clear command window.\n')
                 fprintf('Type exit to exit.\nSingle input functions:\n');
                 dispcell(singlefuns);
                 disp('Double input functions:');
                 dispcell(doublefuns);
+                dispcell(doublefunsmanual);
             case 'c'
                 ind = 1;
             case 'd'
@@ -119,8 +122,12 @@ end
 
 function dispcell(c)
 for ii = 1:length(c)
-    fprintf('\t%s\n',c{ii});
+    fprintf('\t%s,',c{ii});
+    if mod(ii,5) == 0
+        fprintf('\n');
+    end
 end
+fprintf('\n');
 end
 
 %% manual functions
@@ -161,4 +168,12 @@ end
 
 function f = lambda2freq(l0,n)
 f = lambda2omega(l0,n)/2/pi;
+end
+
+function r = deg2rad(d)
+r = deg*pi/180;
+end
+
+function d = rad2deg(r)
+d = r/pi*180;
 end
