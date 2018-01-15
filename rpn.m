@@ -42,15 +42,15 @@ while true
             case 'h'
                 fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n\tclc: clear command window.\n')
                 fprintf('Type exit to exit.\nSingle input functions:\n');
-                disp(singlefuns);
+                dispcell(singlefuns);
                 disp('Double input functions:');
-                disp(doublefuns);
+                dispcell(doublefuns);
             case 'help'
                 fprintf('Commands:\n\th: help\n\thelp: help\n\td: delete last number.\n\tc: clear stack.\n\tclc: clear command window.\n')
                 fprintf('Type exit to exit.\nSingle input functions:\n');
-                disp(singlefuns);
+                dispcell(singlefuns);
                 disp('Double input functions:');
-                disp(doublefuns);
+                dispcell(doublefuns);
             case 'c'
                 ind = 1;
             case 'd'
@@ -114,6 +114,13 @@ function res = checkcmd(str, cmdset)
 % check command, true if command str found in cmdset
 res = cellfun(@(s)strcmpi(s,str),cmdset,'UniformOutput',false);
 res = max([res{:}]);
+end
+
+
+function dispcell(c)
+for ii = 1:length(c)
+    fprintf('\t%s\n',c{ii});
+end
 end
 
 %% manual functions
