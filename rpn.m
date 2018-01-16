@@ -17,11 +17,23 @@ singlefuns = {'exp','log','ln','sqrt','sq',...
 doublefuns = {'+','-','*','/','^'};
 doublefunsmanual = {'omega2lambda','lambda2omega','freq2lambda','lambda2freq'};
 syscmd = {'exit','h','help','d','c','clc'};
-% scientific constants
+% scientific constants, in SI
 hbar = 1.0545718e-34;
 c_const = 299792458;
 epsilon0 = 8.854187817e-12;
-mu0 = 1.2566370614e-6;
+mu0 = 1.2566370614e-6;  % 4pi*1e-7
+Z0 = 376.730313461;     % vacuum impedance
+G = 6.67408e-11;
+e0 = 1.6021766208e-19;
+muB = 927.4009994e-26;
+muN = 5.050783699e-27;
+Phi0 = 2.067833831e15;  % magnetic flux quantum
+m_u = 1.660539040e-27;  % atomic mass
+NA = 6.022140857e23;
+kB = 1.38064852e-23;
+m_e = 9.10938356e-31;   % electron mass
+alpha0 = 7.2973525664e-3;   % fine-structure constant
+sigma0 = 5.670367e-8;   % Stefan-Boltzmann constant 
 
 %
 while true
