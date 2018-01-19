@@ -6,7 +6,7 @@ function rpn
 
 fprintf(['Reverse Polish notation calculator.\nType h or help to see available functions.'...
         '\n\tWentao Jiang, 20180113\n']);
-stack = NaN(10000);
+stack = NaN(1,1000);
 ind = 1;
 singlefuns = {'exp','log','ln','sqrt','sq',...
     'sin','cos','tan','cot','sec','csc','asin','acos','atan','acot',...
@@ -16,25 +16,30 @@ singlefuns = {'exp','log','ln','sqrt','sq',...
     'deg2rad','rad2deg'};
 doublefuns = {'+','-','*','/','^'};
 doublefunsmanual = {'omega2lambda','lambda2omega','freq2lambda','lambda2freq'};
-syscmd = {'exit','h','help','d','c','clc'};
+syscmd = {'exit','h','help','d','c','clc','constants'};
 % scientific constants, in SI
-hbar = 1.0545718e-34;
-c_const = 299792458;
-epsilon0 = 8.854187817e-12;
-mu0 = 1.2566370614e-6;  % 4pi*1e-7
-Z0 = 376.730313461;     % vacuum impedance
-G = 6.67408e-11;
-e0 = 1.6021766208e-19;
-muB = 927.4009994e-26;
-muN = 5.050783699e-27;
-Phi0 = 2.067833831e15;  % magnetic flux quantum
-m_u = 1.660539040e-27;  % atomic mass
-NA = 6.022140857e23;
-kB = 1.38064852e-23;
-m_e = 9.10938356e-31;   % electron mass
-alpha0 = 7.2973525664e-3;   % fine-structure constant
-sigma0 = 5.670367e-8;   % Stefan-Boltzmann constant 
-
+consts.hbar = 1.0545718e-34;
+consts.c_const = 299792458;
+consts.epsilon0 = 8.854187817e-12;
+consts.mu0 = 1.2566370614e-6;  % 4pi*1e-7
+consts.Z0 = 376.730313461;     % vacuum impedance
+consts.G = 6.67408e-11;
+consts.e0 = 1.6021766208e-19;
+consts.muB = 927.4009994e-26;
+consts.muN = 5.050783699e-27;
+consts.Phi0 = 2.067833831e15;  % magnetic flux quantum
+consts.m_u = 1.660539040e-27;  % atomic mass
+consts.NA = 6.022140857e23;
+consts.kB = 1.38064852e-23;
+consts.m_e = 9.10938356e-31;   % electron mass
+consts.alpha0 = 7.2973525664e-3;   % fine-structure constant
+consts.sigma0 = 5.670367e-8;   % Stefan-Boltzmann constant 
+% expand consts struct
+fldns = fieldnames(consts);
+for ii = 1:length(fldns)
+    fldn = fldns{ii};
+    eval(sprintf('%s=%.8e;',fldn, consts.(fldn) ) );
+end
 %
 while true
     dispstk(stack, ind);
@@ -45,7 +50,7 @@ while true
         s2d = str2double(s);
     end
     
-    if ~isnan(s2d)
+    if isfloat(s2d) && length(s2d)==1 && ~isnan(s2d)
         stack(ind) = s2d;
         ind = ind + 1;
     elseif checkcmd(s, syscmd)
@@ -77,6 +82,8 @@ while true
             case 'clc'
                 clc;
                 continue;
+            case 'constants'
+                disp(consts);
         end
     elseif checkcmd(s, singlefuns)
         if ind - 1 < 1
