@@ -19,6 +19,7 @@ doublefunsmanual = {'omega2lambda','lambda2omega','freq2lambda','lambda2freq',..
     'freq2lambda0','lambda02freq','omega2lambda0','deg2rad','rad2deg'};
 syscmd = {'exit','h','help','d','c','clc','constants'};
 % scientific constants, in SI
+consts.e = 2.718281828459045;
 consts.hbar = 1.0545718e-34;
 consts.c_const = 299792458;
 consts.epsilon0 = 8.854187817e-12;
