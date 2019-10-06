@@ -130,7 +130,8 @@ end
 function dispstk(stack,ind)
 % display numbers in the stack
 for ii = 1:(ind-1)
-    fprintf([num2str(stack(ii)) '\n']);
+%     fprintf([num2str(stack(ii)) '\n']);
+    fprintf('%.8e\n', stack(ii));
 end
 end
 
