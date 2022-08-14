@@ -34,6 +34,7 @@ consts.phi0 = 2.067833831e15/2/pi;  % reduced magnetic flux quantum
 consts.m_u = 1.660539040e-27;  % atomic mass
 consts.NA = 6.022140857e23;
 consts.kB = 1.38064852e-23;
+consts.ke = 8.988e9;    % coulomb's constant
 consts.m_e = 9.10938356e-31;   % electron mass
 consts.alpha0 = 7.2973525664e-3;   % fine-structure constant
 consts.sigma0 = 5.670367e-8;   % Stefan-Boltzmann constant 
